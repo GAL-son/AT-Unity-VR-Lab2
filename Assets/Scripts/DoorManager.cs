@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoorManager : MonoBehaviour
 {
     private bool doorIsOpen = false;
+    private bool isTimerActive = false;
     private float doorTimer = 0.0f;
 
     public float doorOpenTime = 3.0f;
@@ -25,7 +26,11 @@ public class DoorManager : MonoBehaviour
         {
             return;
         }
-        doorTimer += Time.deltaTime;
+
+        if (isTimerActive)
+        {
+            doorTimer += Time.deltaTime;
+        }
 
         if (doorTimer <= doorOpenTime)
         {
@@ -33,6 +38,7 @@ public class DoorManager : MonoBehaviour
         }
         Door(doorShutSound, false, "doorShut");
         doorTimer = 0.0f;
+        isTimerActive = false;
     }
 
     void DoorCheck()
@@ -43,14 +49,14 @@ public class DoorManager : MonoBehaviour
         }
     }
 
-    private void ResetTimer()
+    private void StartTimer()
     {
-        doorTimer = 0.0f;
+        isTimerActive = true;
     }
 
     void Door(AudioClip aClip, bool openCheck, string animName)
     {
-        doorIsOpen = openCheck;
+        doorIsOpen = openCheck;      
         this.GetComponent<AudioSource>().PlayOneShot(aClip);
         this.transform.parent.GetComponent<Animation>().Play(animName);
     }

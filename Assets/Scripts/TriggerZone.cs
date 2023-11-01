@@ -20,15 +20,18 @@ public class TriggerZone : MonoBehaviour
     {
         if(col.gameObject.tag == "Player")
         {
-            transform.Find("door").SendMessage("DoorCheck");
+            if(Inventory.charge == 4)
+            {
+                transform.Find("door").SendMessage("DoorCheck");
+            }
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
-            transform.Find("door").SendMessage("ResetTimer");
+            transform.Find("door").SendMessage("StartTimer");
         }
     }
 }
