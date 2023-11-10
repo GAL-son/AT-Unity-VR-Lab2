@@ -36,6 +36,7 @@ public class DoorManager : MonoBehaviour
         {
             return;
         }
+
         Door(doorShutSound, false, "doorShut");
         doorTimer = 0.0f;
         isTimerActive = false;
@@ -45,6 +46,7 @@ public class DoorManager : MonoBehaviour
     {
         if (!doorIsOpen)
         {
+            isTimerActive = false;
             Door(doorOpenSound, true, "doorOpen");
         }
     }
