@@ -44,6 +44,8 @@ public class Inventory : MonoBehaviour
             if(haveMatches)
             {
                 LightFire(hit.gameObject);
+                textHints.SendMessage("ShowHint", "BONFIRE LIT");
+                fireLit = true;
             }
             else if(!fireLit)
             {
@@ -52,10 +54,8 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void LightFire(GameObject campfire)
-    {
-        fireLit = true;
-
+    void LightFire(GameObject campfire) 
+    { 
         ParticleSystem[] fireEmitters;
         Light campfireLight;
 
