@@ -12,6 +12,14 @@ public class Inventory : MonoBehaviour
     // HUD
     public Texture2D[] hudCharge;
     public RawImage chargeHudGUI;
+        // Matches
+    bool haveMatches = false;
+    public RawImage matchesHudGUI;
+        // Inventory Hint
+    public Text textHints;
+
+    // Fire
+    bool fireLit = false;
 
     // Generator
     public Texture2D[] meterCharge;
@@ -27,6 +35,44 @@ public class Inventory : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.name == "campfire")
+        {
+            if(haveMatches)
+            {
+                LightFire(hit.gameObject);
+            }
+            else if(!fireLit)
+            {
+                textHints.SendMessage("ShowHint", "Móg³bym rozpaliæ ognisko do wezwania pomocy.\nTylko czym...");
+            }
+        }
+    }
+
+    void LightFire(GameObject campfire)
+    {
+        fireLit = true;
+
+        ParticleSystem[] fireEmitters;
+        Light campfireLight;
+
+        fireEmitters = campfire.GetComponentsInChildren<ParticleSystem>();
+        campfireLight = campfire.GetComponentInChildren<Light>();
+        
+        foreach(ParticleSystem emitter in fireEmitters)
+        {
+            emitter.Play();
+        }
+
+        campfireLight.enabled = true;
+        campfire.GetComponent<AudioSource>().Play();
+
+        matchesHudGUI.enabled = false;
+        haveMatches = false;
+
     }
 
     void CellPickup()
@@ -45,6 +91,13 @@ public class Inventory : MonoBehaviour
         {
             chargeHudGUI.enabled = true;
         }
+    }
+
+    void MatchPickup()
+    {
+        haveMatches = true;
+        AudioSource.PlayClipAtPoint(collectSound, transform.position);
+        matchesHudGUI.enabled = true;
     }
 }
 
