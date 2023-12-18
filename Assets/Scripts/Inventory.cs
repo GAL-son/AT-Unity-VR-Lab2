@@ -44,7 +44,6 @@ public class Inventory : MonoBehaviour
             if(haveMatches)
             {
                 LightFire(hit.gameObject);
-                textHints.SendMessage("ShowHint", "BONFIRE LIT");
                 fireLit = true;
             }
             else if(!fireLit)
