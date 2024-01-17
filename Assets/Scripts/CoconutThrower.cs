@@ -32,4 +32,5 @@ public class CoconutThrower : MonoBehaviour
             // Physics.IgnoreCollision(transform.root.GetComponent<Collider>(), newCoconut.GetComponent<Collider>(), true);
         }
     }
+
 }

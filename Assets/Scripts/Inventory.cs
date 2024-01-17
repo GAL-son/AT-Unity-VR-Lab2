@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Splines;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
@@ -17,6 +18,7 @@ public class Inventory : MonoBehaviour
     public RawImage matchesHudGUI;
         // Inventory Hint
     public Text textHints;
+    public GameObject plane;
 
     // Fire
     bool fireLit = false;
@@ -43,8 +45,11 @@ public class Inventory : MonoBehaviour
         {
             if(haveMatches)
             {
-                LightFire(hit.gameObject);
                 fireLit = true;
+                LightFire(hit.gameObject);
+                plane.GetComponent<SplineAnimate>().enabled = true;
+                plane.GetComponent<AudioSource>().enabled = true;
+                
             }
             else if(!fireLit)
             {
@@ -75,8 +80,7 @@ public class Inventory : MonoBehaviour
     }
 
     void CellPickup()
-    {
-        
+    {        
         HUDon();        
         AudioSource.PlayClipAtPoint(collectSound, transform.position);
         charge++;
